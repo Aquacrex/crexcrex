@@ -1,7 +1,7 @@
 let currentAnswer = {};
 
 async function loadQuestion() {
-    const response = await fetch("http://localhost:8000/quiz?taxon=Fungi");
+    const response = await fetch("http://localhost:8000/quiz?taxon=Aves");
     const data = await response.json();
     document.getElementById("quiz-image").src = data.image;
     currentAnswer = data.answer;
