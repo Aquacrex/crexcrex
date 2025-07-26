@@ -1,8 +1,16 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import requests, random
 
 app = FastAPI()
 INAT_API = "https://api.inaturalist.org/v1"
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/quiz")
 async def get_quiz_question(taxon: str = "Fungi"):
@@ -25,7 +33,7 @@ async def get_quiz_question(taxon: str = "Fungi"):
     
     # Extract species and image
     species = obs.get("species_guess", "Unknown")
-    image_url = obs["photos"][0]["url"].replace("square", "medium")  # Larger image
+    image_url = obs["photos"][0]["url"]  # Larger image
     
     return {
         "image": image_url,
